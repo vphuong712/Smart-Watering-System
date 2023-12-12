@@ -83,7 +83,7 @@ float soilMoisturePercent(int analogValue) {
 void postData(float temperature, float humidity, float soilMoisture) {
   if(WiFi.status() == WL_CONNECTED) {
       HTTPClient http;
-      http.begin("http://192.168.1.58:5000/sensor-data");
+      http.begin("http://172.20.10.9:5000/sensor-data");
       http.addHeader("Content-Type", "application/json");
         // Tạo chuỗi JSON để gửi lên server
       const size_t capacity = JSON_OBJECT_SIZE(3);
@@ -117,7 +117,7 @@ void postData(float temperature, float humidity, float soilMoisture) {
 void checkButton() {
     if(WiFi.status() == WL_CONNECTED) {
         HTTPClient http;
-        http.begin("http://192.168.1.58:5000/toggle");
+        http.begin("http://172.20.10.9:5000/toggle");
         int httpResponseCode = http.GET();
 
         if (httpResponseCode > 0) {

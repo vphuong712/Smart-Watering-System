@@ -21,7 +21,7 @@ const Cards = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://192.168.1.58:5000/sensor-data')
+      const response = await axios.get('http://172.20.10.9:5000/sensor-data')
       if(response.status === 200) {
         setData(response.data)
       }
@@ -34,7 +34,7 @@ const Cards = () => {
     fetchData();
     const intervalId = setInterval(() => {
       fetchData();
-    }, 5 * 1000);
+    }, 3 * 1000);
     return () => clearInterval(intervalId) 
   }, [])
   

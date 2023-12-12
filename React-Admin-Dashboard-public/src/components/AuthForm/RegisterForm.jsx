@@ -58,7 +58,7 @@ const RegisterForm = () => {
           setIsLoading(true);
             const postUser = async () => {
               try {
-                const response = await axios.post('http://192.168.1.58:5000/auth/register', values)
+                const response = await axios.post('http://172.20.10.12:5000/auth/register', values)
                 setIsLoading(false);
                 if(response.status === 200) {
                   alert(response.data)

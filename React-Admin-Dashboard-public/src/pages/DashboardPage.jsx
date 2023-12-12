@@ -13,7 +13,7 @@ export default DashBoardPage;
 
 export const loader =  async () => {
     try {
-        const response = await axios.get('http://192.168.1.58:5000/toggle');
+        const response = await axios.get('http://172.20.10.9:5000/toggle');
         if(response.status === 200) {
             return response.data;
         }

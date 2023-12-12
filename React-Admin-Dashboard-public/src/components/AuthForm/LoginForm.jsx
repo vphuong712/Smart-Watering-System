@@ -50,7 +50,7 @@ const LoginForm = () => {
           setIsLoading(true);
             const postLogin = async () => {
               try {
-                const response = await axios.post('http://192.168.1.58:5000/auth/login', values)
+                const response = await axios.post('http://172.20.10.9:5000/auth/login', values)
                 setIsLoading(false);
                 if(response.status === 200) {
                   const data = response.data;

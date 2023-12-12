@@ -94,9 +94,6 @@ def auto_mode():
         temp = doc['temperature']
         humidity = doc['humidity']
         soil = doc['soilMoisture']
-        if(temp <= 0 or  humidity <= 0 or soil <= 0):
-            return 'Can not compute', 409
-        
         pos = fz.fuzzy(temp, humidity, soil)
         if(pos >= 70):
             return 'Your plant need to be watered', 200
@@ -252,4 +249,4 @@ def change_password(user_id):
 
         
 if __name__ == '__main__':
-    app.run(host='192.168.1.58', port=5000, debug=True)
+    app.run(host='172.20.10.9', port=5000, debug=True)

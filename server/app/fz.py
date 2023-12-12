@@ -2,7 +2,7 @@ import numpy as np
 import skfuzzy as fuzz
 from skfuzzy import control as ctrl
 
-def fuzzy(temp, humidity, soil):
+def fuzzy(temp, hum, soil):
     # Định nghĩa các biến đầu vào và đầu ra
     temperature = ctrl.Antecedent(np.arange(0, 101, 1), 'temperature')
     humidity = ctrl.Antecedent(np.arange(0, 101, 1), 'humidity')
@@ -18,6 +18,7 @@ def fuzzy(temp, humidity, soil):
     humidity['medium'] = fuzz.trimf(humidity.universe, [30, 60, 90])
     humidity['high'] = fuzz.trimf(humidity.universe, [60, 90, 100])
 
+    soil_moisture['very_dry'] = fuzz.trimf(soil_moisture.universe, [0, 0, 10])
     soil_moisture['dry'] = fuzz.trimf(soil_moisture.universe, [0, 30, 60])
     soil_moisture['moist'] = fuzz.trimf(soil_moisture.universe, [30, 60, 100])
 
@@ -28,17 +29,24 @@ def fuzzy(temp, humidity, soil):
     rule1 = ctrl.Rule(temperature['high'] & humidity['high'] & soil_moisture['dry'], water_needed['high'])
     rule2 = ctrl.Rule(temperature['low'] & soil_moisture['moist'], water_needed['low'])
     rule3 = ctrl.Rule(humidity['low'] | soil_moisture['dry'], water_needed['high'])
-
+    rule4 = ctrl.Rule(temperature['high'] & humidity['low'], water_needed['high'])
+    rule5 = ctrl.Rule(humidity['high'] & soil_moisture['moist'], water_needed['low'])
+    rule6 = ctrl.Rule(temperature['low'] & soil_moisture['dry'], water_needed['low'])
+    rule7 = ctrl.Rule(soil_moisture['very_dry'], water_needed['high'])
+    rule8 = ctrl.Rule(humidity['low'] | soil_moisture['dry'], water_needed['high'])
+    
     # Tạo hệ thống suy luận
-    water_ctrl = ctrl.ControlSystem([rule1, rule2, rule3])
+    water_ctrl = ctrl.ControlSystem([rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8])
     watering = ctrl.ControlSystemSimulation(water_ctrl)
 
     # Gán giá trị cho các biến đầu vào
     watering.input['temperature'] = temp  # Độ nhiệt độ
-    watering.input['humidity'] = humidity   # Độ ẩm
+    watering.input['humidity'] = hum   # Độ ẩm
     watering.input['soil_moisture'] = soil # Độ ẩm đất
 
     # Tiến hành suy luận và dự đoán
     watering.compute()
 
     return watering.output['water_needed']
+
+

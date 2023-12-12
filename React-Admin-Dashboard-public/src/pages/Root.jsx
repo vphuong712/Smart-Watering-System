@@ -26,7 +26,7 @@ export const loader = async () => {
         return redirect('/authentication');
     }
     try {
-        const response = await axios.get(`http://192.168.1.58:5000/users/${userId}`, {
+        const response = await axios.get(`http://172.20.10.9:5000/users/${userId}`, {
             headers: {
                 'Authorization': 'Bearer ' + token
                 }

@@ -42,7 +42,7 @@ const ChangePasswordForm = () => {
             const token = localStorage.getItem('token');
             const userId = localStorage.getItem('id');
             try {
-              const response = await axios.post(`http://192.168.1.58:5000/users/${userId}/change-password`, values, {
+              const response = await axios.post(`http://172.20.10.9:5000/users/${userId}/change-password`, values, {
                 headers: {
                   'Authorization': 'Bearer ' + token
                 }
